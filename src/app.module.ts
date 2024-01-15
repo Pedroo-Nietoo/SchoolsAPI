@@ -23,6 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     ActivityModule,
     TerminusModule,
     HttpModule,
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -41,7 +42,6 @@ import { ScheduleModule } from '@nestjs/schedule';
         limit: 10,
       },
     ]),
-    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

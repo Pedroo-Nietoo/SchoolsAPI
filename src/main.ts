@@ -24,12 +24,27 @@ async function bootstrap() {
     .addServer('http://localhost:3000', 'Dev server')
     .addServer('http://schoolsapi.com', 'Prod server')
 
+    .addTag('Auth', 'All about auth', {
+      description: 'More info',
+      url: 'https://github.com/Pedroo-Nietoo',
+    })
+
     .addTag('Users', 'All about users', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
 
     .addTag('Classes', 'All about classes', {
+      description: 'More info',
+      url: 'https://github.com/Pedroo-Nietoo',
+    })
+
+    .addTag('Activities', 'All about activities', {
+      description: 'More info',
+      url: 'https://github.com/Pedroo-Nietoo',
+    })
+
+    .addTag('Health', 'All about service health', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
