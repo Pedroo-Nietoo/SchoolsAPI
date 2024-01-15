@@ -40,6 +40,8 @@ export class AuthService {
         email: user.email,
         password: pass,
         role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       };
       return await this.jwtService.signAsync(payload);
     } else {
