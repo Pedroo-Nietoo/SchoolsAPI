@@ -108,7 +108,7 @@ export class ClassController {
     status: 500,
     description: 'Internal server error',
   })
-  @Get('/unique/:name')
+  @Get(':name')
   findOne(@Param('name') name: string) {
     return this.classService.findOne(name);
   }

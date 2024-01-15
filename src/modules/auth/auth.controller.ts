@@ -62,6 +62,7 @@ export class AuthController {
       lastName: req.user.lastName,
       email: req.user.email,
       password: req.user.password,
+      role: req.user.role,
     };
     return user;
   }

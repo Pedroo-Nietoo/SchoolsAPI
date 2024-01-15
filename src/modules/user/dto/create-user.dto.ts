@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import {
+  IsDate,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -53,10 +54,13 @@ export class CreateUserDto {
 
   @IsEnum(Role)
   @IsOptional()
-  @ApiProperty({
-    description: 'User role',
-    enum: ['USER', 'ADMIN'],
-    default: 'USER',
-  })
   role: Role;
+
+  profilePicture?: string;
+
+  @IsDate()
+  createdAt: Date;
+
+  @IsDate()
+  updatedAt: Date;
 }

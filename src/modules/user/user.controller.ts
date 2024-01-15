@@ -7,6 +7,13 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
+  Res,
+  UseGuards,
+  InternalServerErrorException,
+  ParseFilePipeBuilder,
+  HttpStatus,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,7 +21,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
+  ApiBody,
   ApiConflictResponse,
+  ApiConsumes,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
@@ -28,10 +37,15 @@ import { Role } from '@prisma/client';
 import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
 import { SwaggerConflictResponse } from 'src/errors/conflict-response';
 import { Public } from '../auth/decorators/public.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
+import { RolesGuard } from './roles.guard';
+// import { Roles } from './decorators/roles.decorator';
 
 @ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')
+@UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -57,11 +71,99 @@ export class UserController {
   })
   @Public()
   @Post()
-  create(
-    @Body() createUserDto: CreateUserDto,
-    @Query('role') role: Role = Role.USER,
-  ) {
+  create(@Body() createUserDto: CreateUserDto, @Query('role') role: Role) {
     return this.userService.create(createUserDto, role);
+  }
+
+  @ApiOperation({
+    summary: 'Uploads a user profile picture',
+    description: 'Uploads a user profile picture to the platform',
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'Profile picture uploaded successfully',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+    type: SwaggerBadRequestResponse,
+  })
+  @ApiNotFoundResponse({
+    status: 404,
+    description: 'User not found',
+    type: SwaggerConflictResponse,
+  })
+  @ApiInternalServerErrorResponse({
+    status: 500,
+    description: 'Internal server error',
+  })
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
+  @Post(':email/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFile(
+    @Param('email') email: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'png',
+        })
+        .addMaxSizeValidator({
+          maxSize: 100000,
+        })
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return this.userService.uploadProfileImage(email, updateUserDto, file);
+  }
+
+  @ApiOperation({
+    summary: 'Gets a user profile picture',
+    description: 'Gets a user specific profile picture',
+  })
+  @ApiOkResponse({
+    status: 200,
+    description: 'User profile picture listed successfully',
+  })
+  @ApiBadRequestResponse({
+    status: 400,
+    description: 'Bad request',
+    type: SwaggerBadRequestResponse,
+  })
+  @ApiInternalServerErrorResponse({
+    status: 500,
+    description: 'Internal server error',
+  })
+  @Get('/:email/get')
+  async getFileInfo(@Param('email') email: string, @Res() res: Response) {
+    try {
+      const base64Data = await this.userService.getProfilePicture(email);
+
+      if (!base64Data) {
+        return res.status(404).send('File not found');
+      }
+
+      res.setHeader('Content-Type', 'image/png');
+
+      res.send(Buffer.from(base64Data, 'base64'));
+    } catch (error) {
+      console.error('Error retrieving image:', error);
+      throw new InternalServerErrorException('Error retrieving image');
+    }
   }
 
   @ApiOperation({
@@ -113,7 +215,7 @@ export class UserController {
     status: 500,
     description: 'Internal server error',
   })
-  @Get('unique/:email')
+  @Get(':email')
   findOne(@Param('email') email: string) {
     return this.userService.findOne(email);
   }
@@ -176,4 +278,11 @@ export class UserController {
   remove(@Param('email') email: string) {
     return this.userService.remove(email);
   }
+
+  // @Public()
+  // @Roles(Role.ADMIN)
+  // @Get('ok')
+  // get() {
+  //   return 'only admins can see it';
+  // }
 }

@@ -39,6 +39,7 @@ export class AuthService {
         lastName: user.lastName,
         email: user.email,
         password: pass,
+        role: user.role,
       };
       return await this.jwtService.signAsync(payload);
     } else {

@@ -6,6 +6,7 @@ import {
   IsNotEmpty,
   IsEmail,
   IsStrongPassword,
+  IsDate,
 } from 'class-validator';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -44,4 +45,12 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     example: 'P@ssword!',
   })
   password: string;
+
+  profilePicture?: any;
+
+  @IsDate()
+  createdAt: Date;
+
+  @IsDate()
+  updatedAt: Date;
 }

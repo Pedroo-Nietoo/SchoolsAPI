@@ -9,6 +9,9 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'USER',
+    "profilePicture" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -27,8 +30,8 @@ CREATE TABLE "classes" (
 -- CreateTable
 CREATE TABLE "activities" (
     "id" TEXT NOT NULL,
-    "number" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
+    "number" INTEGER NOT NULL,
     "description" TEXT NOT NULL,
     "classId" TEXT,
 
@@ -45,10 +48,10 @@ CREATE UNIQUE INDEX "classes_name_key" ON "classes"("name");
 CREATE UNIQUE INDEX "classes_number_key" ON "classes"("number");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "activities_number_key" ON "activities"("number");
+CREATE UNIQUE INDEX "activities_name_key" ON "activities"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "activities_name_key" ON "activities"("name");
+CREATE UNIQUE INDEX "activities_number_key" ON "activities"("number");
 
 -- AddForeignKey
 ALTER TABLE "classes" ADD CONSTRAINT "classes_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;

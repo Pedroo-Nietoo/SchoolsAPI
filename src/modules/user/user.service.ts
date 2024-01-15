@@ -29,9 +29,66 @@ export class UserService {
       data: {
         ...createUserDto,
         password: hash,
-        role,
+        role: role,
+        profilePicture: '',
+        createdAt: new Date(Date.now()),
+        updatedAt: new Date(Date.now()),
       },
     });
+  }
+
+  async uploadProfileImage(
+    email: string,
+    updateUserDto: UpdateUserDto,
+    file: Express.Multer.File,
+  ) {
+    const userExists = await this.prisma.user.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    if (!userExists) {
+      throw new NotFoundException(`User not found`);
+    }
+
+    if (file && file.buffer) {
+      const fileString = file.buffer.toString('base64');
+
+      await this.prisma.user.update({
+        data: {
+          ...updateUserDto,
+          profilePicture: fileString,
+          updatedAt: new Date(Date.now()),
+        },
+        where: {
+          email,
+        },
+      });
+
+      return 'Image uploaded successfully';
+    } else {
+      throw new Error('File is missing or does not have a buffer');
+    }
+  }
+
+  async getProfilePicture(email) {
+    try {
+      const userExists = await this.prisma.user.findFirst({
+        where: {
+          email: email,
+        },
+      });
+
+      if (!userExists) {
+        throw new NotFoundException('File not found');
+      }
+
+      return userExists.profilePicture;
+    } catch (error) {
+      console.error('Error retrieving image:', error);
+      throw new Error('Internal Server Error');
+    }
   }
 
   findAll(page: number) {
@@ -43,6 +100,9 @@ export class UserService {
           lastName: true,
           email: true,
           password: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
           classes: {
             select: {
               id: true,
@@ -58,6 +118,9 @@ export class UserService {
           lastName: true,
           email: true,
           password: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
           classes: {
             select: {
               id: true,
@@ -74,6 +137,9 @@ export class UserService {
           lastName: true,
           email: true,
           password: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
           classes: {
             select: {
               id: true,
@@ -98,6 +164,8 @@ export class UserService {
         email: true,
         password: true,
         role: true,
+        createdAt: true,
+        updatedAt: true,
         classes: {
           select: {
             id: true,
@@ -147,6 +215,7 @@ export class UserService {
       data: {
         ...updateUserDto,
         password: hash,
+        updatedAt: new Date(Date.now()),
       },
       where: {
         email,
@@ -178,5 +247,9 @@ export class UserService {
         email: email,
       },
     });
+  }
+
+  deleteAll() {
+    return this.prisma.user.deleteMany({});
   }
 }

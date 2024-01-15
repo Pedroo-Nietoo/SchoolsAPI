@@ -22,9 +22,17 @@ export class User {
   @Column({
     type: 'enum',
     enum: Role,
-    default: [Role.USER],
   })
   role: Role;
+
+  @Column()
+  profilePicture?: string;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
 
   @OneToMany(() => Class, (classEntity) => classEntity.user)
   classes: Class[];

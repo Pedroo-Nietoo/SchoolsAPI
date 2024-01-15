@@ -11,13 +11,18 @@ import { Class } from './modules/class/entities/class.entity';
 import { Activity } from './modules/activity/entities/activity.entity';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HttpModule } from '@nestjs/axios';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    AuthModule,
     UserModule,
     ClassModule,
     ActivityModule,
-    AuthModule,
+    TerminusModule,
+    HttpModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -30,12 +35,13 @@ import { AuthModule } from './modules/auth/auth.module';
       autoLoadEntities: true,
     }),
     ThrottlerModule.forRoot([
-      //todo Configure throttler
+      //todo Configure a better throttler
       {
-        ttl: 60000,
+        ttl: 60_000,
         limit: 10,
       },
     ]),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

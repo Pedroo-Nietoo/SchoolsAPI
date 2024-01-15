@@ -107,7 +107,7 @@ export class ActivityController {
     status: 500,
     description: 'Internal server error',
   })
-  @Get('/unique/:name')
+  @Get(':name')
   findOne(@Param('name') name: string) {
     return this.activityService.findOne(name);
   }
