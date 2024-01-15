@@ -30,13 +30,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   @ApiOperation({
-    summary: 'Realiza o login de um usuário',
-    description: 'Realiza o login de um usuário plataforma',
+    summary: 'Logs a user',
+    description: 'Logs a user into the platform',
   })
-  @ApiOkResponse({ description: 'Usuário logado com sucesso', status: 200 })
-  @ApiBadRequestResponse({ description: 'Requisição inválida', status: 400 })
+  @ApiOkResponse({ description: 'User logged successfully', status: 200 })
+  @ApiBadRequestResponse({ description: 'Bad request', status: 400 })
   @ApiUnauthorizedResponse({
-    description: 'Acesso não autorizado',
+    description: 'Unauthorized access',
     status: 401,
   })
   signIn(@Body() signInDto: SignInUserDto) {
@@ -45,14 +45,16 @@ export class AuthController {
 
   @Get('profile')
   @ApiOperation({
-    summary: 'Acessa as informações de um usuário',
-    description:
-      'Acessa as informações de um usuário com base no Bearer Token recebido no login',
+    summary: 'Shows the logged in user profile',
+    description: 'Shows the logged in user profile by using the JWT Token',
   })
-  @ApiOkResponse({ description: 'Informações encontradas', status: 200 })
-  @ApiBadRequestResponse({ description: 'Requisição inválida', status: 400 })
+  @ApiOkResponse({
+    description: 'Profile ifo listed successfully',
+    status: 200,
+  })
+  @ApiBadRequestResponse({ description: 'Bad request', status: 400 })
   @ApiUnauthorizedResponse({
-    description: 'Acesso não autorizado',
+    description: 'Unauthorized access',
     status: 401,
   })
   getProfile(@Request() req) {

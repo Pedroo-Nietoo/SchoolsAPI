@@ -27,7 +27,7 @@ export class AuthService {
     });
 
     if (!userExists) {
-      throw new NotFoundException('Usuário não existente');
+      throw new NotFoundException('User not found');
     }
 
     const isMatch = await bcrypt.compare(pass, user.password);
