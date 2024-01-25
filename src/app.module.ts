@@ -1,19 +1,19 @@
+import { PrismaService } from '@/prisma/PrismaService';
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TerminusModule } from '@nestjs/terminus';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PrismaService } from './database/PrismaService';
-import { UserModule } from './modules/user/user.module';
-import { ClassModule } from './modules/class/class.module';
 import { ActivityModule } from './modules/activity/activity.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './modules/user/entities/user.entity';
-import { Class } from './modules/class/entities/class.entity';
 import { Activity } from './modules/activity/entities/activity.entity';
-import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './modules/auth/auth.module';
-import { TerminusModule } from '@nestjs/terminus';
-import { HttpModule } from '@nestjs/axios';
-import { ScheduleModule } from '@nestjs/schedule';
+import { ClassModule } from './modules/class/class.module';
+import { Class } from './modules/class/entities/class.entity';
+import { User } from './modules/user/entities/user.entity';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [

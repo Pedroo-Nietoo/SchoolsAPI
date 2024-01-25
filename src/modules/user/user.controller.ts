@@ -41,7 +41,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from './roles.guard';
 import { UserService } from './user.service';
 // import { Roles } from './decorators/roles.decorator';
-
 @ApiBearerAuth()
 @ApiTags('Users')
 @Controller('users')

@@ -1,15 +1,15 @@
+import { PrismaService } from '@/prisma/PrismaService';
 import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
 import {
+  DiskHealthIndicator,
+  HealthCheckResult,
   HealthCheckService,
   HttpHealthIndicator,
-  TypeOrmHealthIndicator,
-  PrismaHealthIndicator,
-  DiskHealthIndicator,
   MemoryHealthIndicator,
-  HealthCheckResult,
+  PrismaHealthIndicator,
+  TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
-import { PrismaService } from './database/PrismaService';
-import { Cron, CronExpression, Timeout } from '@nestjs/schedule';
 
 @Injectable()
 export class AppService {

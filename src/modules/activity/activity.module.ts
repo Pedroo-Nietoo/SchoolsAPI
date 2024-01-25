@@ -1,9 +1,9 @@
+import { PrismaService } from '@/prisma/PrismaService';
 import { Module } from '@nestjs/common';
-import { ActivityService } from './activity.service';
-import { ActivityController } from './activity.controller';
-import { PrismaService } from 'src/database/PrismaService';
-import { Activity } from './entities/activity.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ActivityController } from './activity.controller';
+import { ActivityService } from './activity.service';
+import { Activity } from './entities/activity.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Activity])],

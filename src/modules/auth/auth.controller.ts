@@ -7,9 +7,8 @@ import {
   HttpStatus,
   Post,
   Request,
+  Res,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { Public } from './decorators/public.decorator';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -18,7 +17,10 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Response } from 'express';
 import { SignInUserDto } from '../user/dto/signin-user.dto';
+import { AuthService } from './auth.service';
+import { Public } from './decorators/public.decorator';
 
 @ApiBearerAuth()
 @ApiTags('Auth')
@@ -39,8 +41,22 @@ export class AuthController {
     description: 'Unauthorized access',
     status: 401,
   })
-  signIn(@Body() signInDto: SignInUserDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  async signIn(
+    @Body() signInDto: SignInUserDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const token = await this.authService.signIn(
+      signInDto.email,
+      signInDto.password,
+    );
+
+    response.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+
+    return { token };
   }
 
   @Get('profile')
@@ -49,7 +65,7 @@ export class AuthController {
     description: 'Shows the logged in user profile by using the JWT Token',
   })
   @ApiOkResponse({
-    description: 'Profile ifo listed successfully',
+    description: 'Profile info listed successfully',
     status: 200,
   })
   @ApiBadRequestResponse({ description: 'Bad request', status: 400 })

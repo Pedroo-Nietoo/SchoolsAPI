@@ -1,3 +1,4 @@
+import { PrismaService } from '@/prisma/PrismaService';
 import {
   ConflictException,
   Injectable,
@@ -5,7 +6,6 @@ import {
 } from '@nestjs/common';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
-import { PrismaService } from 'src/database/PrismaService';
 
 @Injectable()
 export class ActivityService {

@@ -12,10 +12,18 @@ import { jwtConstants } from './constants';
 @Module({
   imports: [
     UserModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '1d' },
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: jwtConstants.secret,
+        signOptions: {
+          expiresIn: '1d',
+        },
+        cookie: {
+          httpOnly: true,
+          sameSite: 'none',
+          secure: true,
+        },
+      }),
     }),
   ],
   providers: [
