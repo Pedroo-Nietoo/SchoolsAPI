@@ -20,8 +20,6 @@ async function bootstrap() {
       'pedronieto.2005@gmail.com',
     )
 
-    .addBearerAuth()
-
     .addServer('http://localhost:3000', 'Dev server')
     .addServer('http://schoolsapi.com', 'Prod server')
 

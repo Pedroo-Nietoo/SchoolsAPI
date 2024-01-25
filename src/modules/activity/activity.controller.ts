@@ -1,18 +1,14 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ActivityService } from './activity.service';
-import { CreateActivityDto } from './dto/create-activity.dto';
-import { UpdateActivityDto } from './dto/update-activity.dto';
 import {
   ApiBadRequestResponse,
-  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
@@ -24,8 +20,10 @@ import {
 } from '@nestjs/swagger';
 import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
 import { SwaggerConflictResponse } from 'src/errors/conflict-response';
+import { ActivityService } from './activity.service';
+import { CreateActivityDto } from './dto/create-activity.dto';
+import { UpdateActivityDto } from './dto/update-activity.dto';
 
-@ApiBearerAuth()
 @ApiTags('Activities')
 @Controller('activity')
 export class ActivityController {

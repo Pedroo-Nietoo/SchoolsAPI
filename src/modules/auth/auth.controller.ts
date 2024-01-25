@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
-  ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -22,7 +21,6 @@ import { SignInUserDto } from '../user/dto/signin-user.dto';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 
-@ApiBearerAuth()
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
@@ -56,7 +54,7 @@ export class AuthController {
       secure: true,
     });
 
-    return { token };
+    return token;
   }
 
   @Get('profile')

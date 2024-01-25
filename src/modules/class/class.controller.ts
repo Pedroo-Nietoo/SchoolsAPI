@@ -1,31 +1,29 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { ClassService } from './class.service';
-import { CreateClassDto } from './dto/create-class.dto';
-import { UpdateClassDto } from './dto/update-class.dto';
 import {
-  ApiOperation,
-  ApiOkResponse,
   ApiBadRequestResponse,
-  ApiInternalServerErrorResponse,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
-  ApiTags,
-  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
   ApiParam,
+  ApiTags,
 } from '@nestjs/swagger';
 import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
 import { SwaggerConflictResponse } from 'src/errors/conflict-response';
+import { ClassService } from './class.service';
+import { CreateClassDto } from './dto/create-class.dto';
+import { UpdateClassDto } from './dto/update-class.dto';
 
-@ApiBearerAuth()
 @ApiTags('Classes')
 @Controller('class')
 export class ClassController {
