@@ -1,23 +1,23 @@
+import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
+import { SwaggerConflictResponse } from '@/errors/conflict-response';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
-  Query,
-  UseInterceptors,
-  UploadedFile,
-  Res,
-  UseGuards,
-  InternalServerErrorException,
-  ParseFilePipeBuilder,
+  Get,
   HttpStatus,
+  InternalServerErrorException,
+  Param,
+  ParseFilePipeBuilder,
+  Patch,
+  Post,
+  Query,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -34,12 +34,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
-import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
-import { SwaggerConflictResponse } from 'src/errors/conflict-response';
-import { Public } from '../auth/decorators/public.decorator';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
+import { Public } from '../auth/decorators/public.decorator';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from './roles.guard';
+import { UserService } from './user.service';
 // import { Roles } from './decorators/roles.decorator';
 
 @ApiBearerAuth()

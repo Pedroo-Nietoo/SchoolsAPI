@@ -1,6 +1,6 @@
 import { Activitiy } from '@prisma/client';
 import { Activity } from 'src/modules/activity/entities/activity.entity';
-import { User } from 'src/modules/user/entities/user.entity';
+import { User } from '@/modules/user/entities/user.entity';
 import {
   Column,
   Entity,

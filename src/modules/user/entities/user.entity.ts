@@ -1,16 +1,16 @@
 import { Role } from '@prisma/client';
-import { Class } from 'src/modules/class/entities/class.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Class } from '@/modules/class/entities/class.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @Column({ length: 15 })
   firstName: string;
 
-  @Column()
+  @Column({ length: 20 })
   lastName: string;
 
   @Column({ unique: true })

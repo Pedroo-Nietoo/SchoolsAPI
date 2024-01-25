@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
-import { PrismaService } from 'src/database/PrismaService';
+import { PrismaService } from '@/prisma/PrismaService';
 
 @Injectable()
 export class ClassService {
