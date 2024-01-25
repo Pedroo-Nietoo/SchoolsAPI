@@ -1,4 +1,3 @@
-Permitir que mais tipos de imagem sejam enviados
 Relação many to many entre users e classes
 Fazer rotas pra ADMIN
 
