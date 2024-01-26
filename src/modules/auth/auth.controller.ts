@@ -40,12 +40,13 @@ export class AuthController {
   @Post('login')
   @ApiOperation({
     summary: 'Logs a user',
-    description: 'Logs a user into the platform',
+    description:
+      'Logs a user into the platform and sets the JWT token as a cookie.',
   })
-  @ApiOkResponse({ description: 'User logged successfully', status: 200 })
-  @ApiBadRequestResponse({ description: 'Bad request', status: 400 })
+  @ApiOkResponse({ description: 'User logged in successfully', status: 200 })
+  @ApiBadRequestResponse({ description: 'Invalid request', status: 400 })
   @ApiUnauthorizedResponse({
-    description: 'Unauthorized access',
+    description: 'Unauthorized access or invalid credentials',
     status: 401,
   })
   async signIn(
@@ -74,10 +75,11 @@ export class AuthController {
   @Get('profile')
   @ApiOperation({
     summary: 'Shows the logged in user profile',
-    description: 'Shows the logged in user profile by using the JWT Token',
+    description:
+      'Retrieves the profile information of the logged-in user using the provided JWT token.',
   })
   @ApiOkResponse({
-    description: 'Profile info listed successfully',
+    description: 'Profile information retrieved successfully',
     status: 200,
   })
   @ApiBadRequestResponse({ description: 'Bad request', status: 400 })
@@ -97,5 +99,34 @@ export class AuthController {
       updatedAt: req.user.updatedAt,
     };
     return user;
+  }
+
+  /**
+   * Revokes the user's login by removing the JWT token cookie.
+   * @param {Request} req - The HTTP request object.
+   * @param {Response} res - The HTTP response object.
+   * @returns {object} A message indicating the successful revocation.
+   */
+  @ApiOperation({
+    summary: 'Logout',
+    description: "Revokes the user's login by removing the JWT token cookie.",
+  })
+  @ApiOkResponse({
+    description: 'Token revoked successfully',
+    status: 200,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized access',
+    status: 401,
+  })
+  @Get('logout')
+  async logout(@Res() res: Response) {
+    res.clearCookie('token', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+
+    return res.status(200).json('Token revoked successfully');
   }
 }
