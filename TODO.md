@@ -1,7 +1,5 @@
-Relação many to many entre users e classes
-Fazer rotas pra ADMIN
-Configure a better throttler
-Fazer os testes da aplicação
----
-
-Docker
+1. Configurar throttler
+2. Fazer rotas pra ADMIN
+3. Relação many to many entre users e classes
+4. Realizar os testes da aplicação
+5. Configurar para rodar no docker
