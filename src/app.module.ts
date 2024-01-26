@@ -36,7 +36,6 @@ import { UserModule } from './modules/user/user.module';
       autoLoadEntities: true,
     }),
     ThrottlerModule.forRoot([
-      //todo Configure a better throttler
       {
         ttl: 60_000,
         limit: 10,
