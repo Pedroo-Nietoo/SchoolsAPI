@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  nestsjs-api:
+    stdin_open: true
+    container_name: nestsjs-api
+    image: node:latest
+    working_dir: /usr/src/app
+    command: '/usr/src/app/docker/docker-run-dev.sh'
+    env_file:
+      - ../.env
+    ports:
+      - '3000:3000'
+    depends_on:
+      - postgres
+    restart: always
+    volumes:
+      - ..:/usr/src/app
+      - ../node_modules:/usr/src/app/node_modules
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - postgres
+    ports:
+      - '5555:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    restart: unless-stopped
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
