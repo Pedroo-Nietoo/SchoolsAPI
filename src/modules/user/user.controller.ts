@@ -40,14 +40,22 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesGuard } from './roles.guard';
 import { UserService } from './user.service';
-// import { Roles } from './decorators/roles.decorator';
 
+/**
+ * Controller responsible for managing user-related operations, including creation, retrieval, update, and deletion.
+ */
 @ApiTags('Users')
 @Controller('users')
 @UseGuards(RolesGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  /**
+   * Creates a new user on the platform.
+   * @param {CreateUserDto} createUserDto - The DTO containing user creation information.
+   * @param {Role} role - The role of the user.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiQuery({ name: 'role', enum: Role })
   @ApiOperation({
     summary: 'Creates a user',
@@ -74,6 +82,13 @@ export class UserController {
     return this.userService.create(createUserDto, role);
   }
 
+  /**
+   * Uploads a user profile picture to the platform.
+   * @param {string} email - The email of the user.
+   * @param {UpdateUserDto} updateUserDto - The DTO containing user update information.
+   * @param {Express.Multer.File} file - The uploaded file.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Uploads a user profile picture',
     description: 'Uploads a user profile picture to the platform',
@@ -126,6 +141,12 @@ export class UserController {
     return this.userService.uploadProfileImage(email, updateUserDto, file);
   }
 
+  /**
+   * Gets a user profile picture.
+   * @param {string} email - The email of the user.
+   * @param {Response} res - The HTTP response object.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Gets a user profile picture',
     description: 'Gets a user specific profile picture',
@@ -161,6 +182,11 @@ export class UserController {
     }
   }
 
+  /**
+   * Lists all users on the platform.
+   * @param {number} page - The page number for paginated results.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists all users',
     description: 'Lists all users on the platform',
@@ -188,6 +214,11 @@ export class UserController {
     return this.userService.findAll(page);
   }
 
+  /**
+   * Lists information about a specific user on the platform.
+   * @param {string} email - The email of the user.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists a specific user',
     description: 'Lists a specific user on the platform',
@@ -215,6 +246,12 @@ export class UserController {
     return this.userService.findOne(email);
   }
 
+  /**
+   * Updates information about a specific user on the platform.
+   * @param {string} email - The email of the user.
+   * @param {UpdateUserDto} updateUserDto - The DTO containing user update information.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Updates a user information',
     description: 'Updates a user information on the platform',
@@ -247,6 +284,11 @@ export class UserController {
     return this.userService.update(email, updateUserDto);
   }
 
+  /**
+   * Removes a user from the platform.
+   * @param {string} email - The email of the user.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Removes a user',
     description: 'Removes a user from the platform',
@@ -273,11 +315,4 @@ export class UserController {
   remove(@Param('email') email: string) {
     return this.userService.remove(email);
   }
-
-  // @Public()
-  // @Roles(Role.ADMIN)
-  // @Get('ok')
-  // get() {
-  //   return 'only admins can see it';
-  // }
 }

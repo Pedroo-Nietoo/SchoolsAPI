@@ -11,8 +11,21 @@ import {
   TypeOrmHealthIndicator,
 } from '@nestjs/terminus';
 
+/**
+ * Service responsible for performing health checks on various components of the server.
+ */
 @Injectable()
 export class AppService {
+  /**
+   * Constructs an instance of the AppService.
+   * @param {HealthCheckService} health - The health check service.
+   * @param {HttpHealthIndicator} http - The HTTP health indicator.
+   * @param {TypeOrmHealthIndicator} db - The TypeORM health indicator for database checks.
+   * @param {PrismaHealthIndicator} prisma - The Prisma health indicator for Prisma checks.
+   * @param {PrismaService} prismaService - The Prisma service instance.
+   * @param {DiskHealthIndicator} disk - The disk health indicator for storage checks.
+   * @param {MemoryHealthIndicator} memory - The memory health indicator for memory checks.
+   */
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -23,8 +36,16 @@ export class AppService {
     private readonly memory: MemoryHealthIndicator,
   ) {}
 
+  /**
+   * Creating a new Logger that will log server health-related messages.
+   */
   private readonly logger = new Logger('Server Health');
 
+  /**
+   * Performs a scheduled health check, including checks for HTTP, database, Prisma, storage, and memory.
+   * @returns {Promise<HealthCheckResult>} The result of the health check.
+   * @throws {Error} If an error occurs during the health check.
+   */
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async checkHealth() {
     try {
@@ -52,6 +73,9 @@ export class AppService {
     }
   }
 
+  /**
+   * Logs a message indicating that the service is up and running.
+   */
   @Timeout(1000)
   runApplication() {
     return this.logger.log('Service is now up and running! 🌱');

@@ -1,15 +1,23 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
-  IsNotEmpty,
-  IsEmail,
-  IsStrongPassword,
   IsDate,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  IsStrongPassword,
 } from 'class-validator';
+import { CreateUserDto } from './create-user.dto';
 
+/**
+ * Partial data transfer object (DTO) for updating user information.
+ * Inherits from the CreateUserDto to reuse validation rules.
+ */
 export class UpdateUserDto extends PartialType(CreateUserDto) {
+  /**
+   * The updated first name of the user.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -19,6 +27,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   firstName: string;
 
+  /**
+   * The updated last name of the user.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -28,6 +40,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   lastName: string;
 
+  /**
+   * The updated email address of the user.
+   * @type {string}
+   */
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty({
@@ -37,6 +53,10 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   email: string;
 
+  /**
+   * The updated password for the user, complying with strong password requirements.
+   * @type {string}
+   */
   @IsStrongPassword()
   @IsNotEmpty()
   @ApiProperty({
@@ -46,11 +66,23 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   })
   password: string;
 
+  /**
+   * The updated profile picture for the user.
+   * @type {any | undefined}
+   */
   profilePicture?: any;
 
+  /**
+   * The timestamp indicating when the user was created.
+   * @type {Date}
+   */
   @IsDate()
   createdAt: Date;
 
+  /**
+   * The timestamp indicating when the user was last updated.
+   * @type {Date}
+   */
   @IsDate()
   updatedAt: Date;
 }

@@ -1,17 +1,28 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsUUID,
-  IsOptional,
-  IsString,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
 } from 'class-validator';
 
+/**
+ * Data transfer object (DTO) for creating a new activity.
+ */
 export class CreateActivityDto {
+  /**
+   * The optional UUID for the activity.
+   * @type {string}
+   */
   @IsUUID()
   @IsOptional()
   id?: string;
 
+  /**
+   * The name of the activity.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -21,6 +32,10 @@ export class CreateActivityDto {
   })
   name: string;
 
+  /**
+   * The number associated with the activity.
+   * @type {number}
+   */
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -30,6 +45,10 @@ export class CreateActivityDto {
   })
   number: number;
 
+  /**
+   * The description of the activity.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -39,6 +58,10 @@ export class CreateActivityDto {
   })
   description: string;
 
+  /**
+   * The ID of the class associated with the activity.
+   * @type {string}
+   */
   @ApiProperty({
     description: 'Class id',
     type: String,

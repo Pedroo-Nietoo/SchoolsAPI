@@ -11,11 +11,22 @@ import {
   IsUUID,
 } from 'class-validator';
 
+/**
+ * Data transfer object (DTO) for creating a new user.
+ */
 export class CreateUserDto {
+  /**
+   * The optional UUID for the user.
+   * @type {string}
+   */
   @IsUUID()
   @IsOptional()
   id?: string;
 
+  /**
+   * The first name of the user.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -25,6 +36,10 @@ export class CreateUserDto {
   })
   firstName: string;
 
+  /**
+   * The last name of the user.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -34,6 +49,10 @@ export class CreateUserDto {
   })
   lastName: string;
 
+  /**
+   * The email address of the user.
+   * @type {string}
+   */
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty({
@@ -43,6 +62,10 @@ export class CreateUserDto {
   })
   email: string;
 
+  /**
+   * The password for the user, complying with strong password requirements.
+   * @type {string}
+   */
   @IsStrongPassword()
   @IsNotEmpty()
   @ApiProperty({
@@ -52,15 +75,31 @@ export class CreateUserDto {
   })
   password: string;
 
+  /**
+   * The role of the user, represented as an enum from the @prisma/client module.
+   * @type {Role}
+   */
   @IsEnum(Role)
   @IsOptional()
   role: Role;
 
+  /**
+   * The URL path to the user's profile picture.
+   * @type {string | undefined}
+   */
   profilePicture?: string;
 
+  /**
+   * The timestamp indicating when the user was created.
+   * @type {Date}
+   */
   @IsDate()
   createdAt: Date;
 
+  /**
+   * The timestamp indicating when the user was last updated.
+   * @type {Date}
+   */
   @IsDate()
   updatedAt: Date;
 }

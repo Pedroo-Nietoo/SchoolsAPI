@@ -1,9 +1,17 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateClassDto } from './create-class.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { CreateClassDto } from './create-class.dto';
 
+/**
+ * Partial data transfer object (DTO) for updating class information.
+ * Inherits from the CreateClassDto to reuse validation rules.
+ */
 export class UpdateClassDto extends PartialType(CreateClassDto) {
+  /**
+   * The updated name of the class.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -13,6 +21,10 @@ export class UpdateClassDto extends PartialType(CreateClassDto) {
   })
   name: string;
 
+  /**
+   * The updated number associated with the class.
+   * @type {number}
+   */
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -22,6 +34,10 @@ export class UpdateClassDto extends PartialType(CreateClassDto) {
   })
   number: number;
 
+  /**
+   * The updated description of the class.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -31,6 +47,10 @@ export class UpdateClassDto extends PartialType(CreateClassDto) {
   })
   description: string;
 
+  /**
+   * The updated ID of the user associated with the class.
+   * @type {string}
+   */
   @ApiProperty({
     description: 'User id',
     type: String,

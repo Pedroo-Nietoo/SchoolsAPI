@@ -7,11 +7,22 @@ import {
   IsUUID,
 } from 'class-validator';
 
+/**
+ * Data transfer object (DTO) for creating a new class.
+ */
 export class CreateClassDto {
+  /**
+   * The optional UUID for the class.
+   * @type {string}
+   */
   @IsUUID()
   @IsOptional()
   id?: string;
 
+  /**
+   * The name of the class.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -21,6 +32,10 @@ export class CreateClassDto {
   })
   name: string;
 
+  /**
+   * The number associated with the class.
+   * @type {number}
+   */
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({
@@ -30,6 +45,10 @@ export class CreateClassDto {
   })
   number: number;
 
+  /**
+   * The description of the class.
+   * @type {string}
+   */
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
@@ -39,6 +58,10 @@ export class CreateClassDto {
   })
   description: string;
 
+  /**
+   * The ID of the user associated with the class.
+   * @type {string}
+   */
   @ApiProperty({
     description: 'User id',
     type: String,

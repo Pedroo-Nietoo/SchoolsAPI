@@ -5,6 +5,9 @@ import * as cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { AppModule } from './app.module';
 
+/**
+ * Bootstraps the NestJS application, configuring settings such as Swagger documentation, security headers, CORS, and server listening.
+ */
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
@@ -13,13 +16,12 @@ async function bootstrap() {
     .setDescription(
       'School API system with professors, classes and activities management',
     )
-    .setVersion('1.0')
+    .setVersion('1.0.2')
     .setContact(
       'Pedro Henrique Nieto da Silva',
       'https://devtree-pedro-nieto.vercel.app/',
       'pedronieto.2005@gmail.com',
     )
-
     .addServer('http://localhost:3000', 'Dev server')
     .addServer('http://schoolsapi.com', 'Prod server')
 
@@ -27,22 +29,18 @@ async function bootstrap() {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
-
     .addTag('Users', 'All about users', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
-
     .addTag('Classes', 'All about classes', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
-
     .addTag('Activities', 'All about activities', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
-
     .addTag('Health', 'All about service health', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
@@ -61,4 +59,8 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
+/**
+ * Calls the bootstrap function to start the application.
+ */
 bootstrap();

@@ -21,11 +21,20 @@ import { SignInUserDto } from '../user/dto/signin-user.dto';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 
+/**
+ * Controller responsible for handling authentication-related operations, including user login and profile retrieval.
+ */
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  /**
+   * Logs a user into the platform.
+   * @param {SignInUserDto} signInDto - The DTO containing user login information.
+   * @param {Response} response - The HTTP response object to set the JWT token as a cookie.
+   * @returns {Promise<string>} A promise containing the JWT token.
+   */
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -57,6 +66,11 @@ export class AuthController {
     return token;
   }
 
+  /**
+   * Shows the logged in user profile by using the JWT Token.
+   * @param {Request} req - The HTTP request object containing the user information from the JWT Token.
+   * @returns {object} The user profile information.
+   */
   @Get('profile')
   @ApiOperation({
     summary: 'Shows the logged in user profile',

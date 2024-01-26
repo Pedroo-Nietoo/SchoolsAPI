@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsEmail, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsStrongPassword } from 'class-validator';
 
+/**
+ * Data transfer object (DTO) for user sign-in.
+ */
 export class SignInUserDto {
+  /**
+   * The email address of the user.
+   * @type {string}
+   */
   @IsEmail()
   @IsNotEmpty()
   @ApiProperty({
@@ -11,6 +18,10 @@ export class SignInUserDto {
   })
   email: string;
 
+  /**
+   * The password for user sign-in, complying with strong password requirements.
+   * @type {string}
+   */
   @IsStrongPassword()
   @IsNotEmpty()
   @ApiProperty({

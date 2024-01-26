@@ -24,11 +24,19 @@ import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
 
+/**
+ * Controller responsible for managing class-related operations, including creation, retrieval, update, and deletion.
+ */
 @ApiTags('Classes')
 @Controller('class')
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
+  /**
+   * Creates a new class on the platform.
+   * @param {CreateClassDto} createClassDto - The DTO containing class creation information.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Creates a class',
     description: 'Creates a class on the platform',
@@ -57,6 +65,11 @@ export class ClassController {
     return this.classService.create(createClassDto);
   }
 
+  /**
+   * Lists all classes on the platform.
+   * @param {number} page - The page number for paginated results.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists all classes',
     description: 'Lists all classes on the platform',
@@ -84,6 +97,11 @@ export class ClassController {
     return this.classService.findAll(+page);
   }
 
+  /**
+   * Lists information about a specific class on the platform.
+   * @param {string} name - The name of the class.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists a specific class',
     description: 'Lists a specific class on the platform',
@@ -111,6 +129,12 @@ export class ClassController {
     return this.classService.findOne(name);
   }
 
+  /**
+   * Updates information about a specific class on the platform.
+   * @param {string} name - The name of the class.
+   * @param {UpdateClassDto} updateClassDto - The DTO containing class update information.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Updates a class information',
     description: 'Updates a class information on the platform',
@@ -143,6 +167,11 @@ export class ClassController {
     return this.classService.update(name, updateClassDto);
   }
 
+  /**
+   * Removes a class from the platform.
+   * @param {string} name - The name of the class.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Removes a class',
     description: 'Removes a class from the platform',

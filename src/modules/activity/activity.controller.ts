@@ -24,14 +24,22 @@ import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
 
+/**
+ * Controller responsible for managing activity-related operations, including creation, retrieval, update, and deletion.
+ */
 @ApiTags('Activities')
 @Controller('activity')
 export class ActivityController {
   constructor(private readonly activityService: ActivityService) {}
 
+  /**
+   * Creates a new activity on the platform.
+   * @param {CreateActivityDto} createActivityDto - The DTO containing activity creation information.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
-    summary: 'Creates a activity',
-    description: 'Creates a activity on the platform',
+    summary: 'Creates an activity',
+    description: 'Creates an activity on the platform',
   })
   @ApiCreatedResponse({
     status: 201,
@@ -56,6 +64,11 @@ export class ActivityController {
     return this.activityService.create(createActivityDto);
   }
 
+  /**
+   * Lists all activities on the platform.
+   * @param {number} page - The page number for paginated results.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists all activities',
     description: 'Lists all activities on the platform',
@@ -83,6 +96,11 @@ export class ActivityController {
     return this.activityService.findAll(+page);
   }
 
+  /**
+   * Lists information about a specific activity on the platform.
+   * @param {string} name - The name of the activity.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
     summary: 'Lists a specific activity',
     description: 'Lists a specific activity on the platform',
@@ -110,9 +128,15 @@ export class ActivityController {
     return this.activityService.findOne(name);
   }
 
+  /**
+   * Updates information about a specific activity on the platform.
+   * @param {string} name - The name of the activity.
+   * @param {UpdateActivityDto} updateActivityDto - The DTO containing activity update information.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
-    summary: 'Updates a activity information',
-    description: 'Updates a activity information on the platform',
+    summary: 'Updates an activity information',
+    description: 'Updates an activity information on the platform',
   })
   @ApiOkResponse({
     status: 200,
@@ -145,9 +169,14 @@ export class ActivityController {
     return this.activityService.update(name, updateActivityDto);
   }
 
+  /**
+   * Removes an activity from the platform.
+   * @param {string} name - The name of the activity.
+   * @returns {Promise<void>} A promise indicating the success of the operation.
+   */
   @ApiOperation({
-    summary: 'Removes a activity',
-    description: 'Removes a activity from the platform',
+    summary: 'Removes an activity',
+    description: 'Removes an activity from the platform',
   })
   @ApiOkResponse({
     status: 200,

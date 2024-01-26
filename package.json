@@ -1,10 +1,10 @@
 {
   "name": "api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.8.0",
+  "description": "Schools API focusing in provide user, classes and activities functions with auth system",
+  "author": "Pedro Henrique Nieto da Silva",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GNU GENERAL PUBLIC LICENSE",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
