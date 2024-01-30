@@ -38,8 +38,10 @@
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "compodoc": "^0.0.41",
+    "cookie": "^0.6.0",
     "cookie-parser": "^1.4.6",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "postgres": "^3.4.3",
     "reflect-metadata": "^0.1.13",
@@ -47,6 +49,7 @@
     "typeorm": "^0.3.19"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.0",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
