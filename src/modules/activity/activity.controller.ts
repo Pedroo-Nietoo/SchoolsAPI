@@ -18,8 +18,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
-import { SwaggerConflictResponse } from 'src/errors/conflict-response';
+import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
+import { SwaggerConflictResponse } from '@/errors/conflict-response';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';

@@ -18,8 +18,8 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { SwaggerBadRequestResponse } from 'src/errors/bad-request-response';
-import { SwaggerConflictResponse } from 'src/errors/conflict-response';
+import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
+import { SwaggerConflictResponse } from '@/errors/conflict-response';
 import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
