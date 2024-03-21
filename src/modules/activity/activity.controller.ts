@@ -1,3 +1,5 @@
+import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
+import { SwaggerConflictResponse } from '@/errors/conflict-response';
 import {
   Body,
   Controller,
@@ -18,8 +20,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
-import { SwaggerConflictResponse } from '@/errors/conflict-response';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
@@ -59,6 +60,7 @@ export class ActivityController {
     status: 500,
     description: 'Internal server error',
   })
+  @SkipThrottle({ default: false })
   @Post()
   create(@Body() createActivityDto: CreateActivityDto) {
     return this.activityService.create(createActivityDto);

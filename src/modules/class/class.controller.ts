@@ -1,3 +1,5 @@
+import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
+import { SwaggerConflictResponse } from '@/errors/conflict-response';
 import {
   Body,
   Controller,
@@ -18,8 +20,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { SwaggerBadRequestResponse } from '@/errors/bad-request-response';
-import { SwaggerConflictResponse } from '@/errors/conflict-response';
+import { SkipThrottle } from '@nestjs/throttler';
 import { ClassService } from './class.service';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
@@ -60,6 +61,7 @@ export class ClassController {
     status: 500,
     description: 'Internal server error',
   })
+  @SkipThrottle({ default: false })
   @Post()
   create(@Body() createClassDto: CreateClassDto) {
     return this.classService.create(createClassDto);

@@ -33,6 +33,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { SkipThrottle } from '@nestjs/throttler';
 import { Role } from '@prisma/client';
 import { Response } from 'express';
 import { Public } from '../auth/decorators/public.decorator';
@@ -77,6 +78,7 @@ export class UserController {
     description: 'Internal server error',
   })
   @Public()
+  @SkipThrottle({ default: false })
   @Post()
   create(@Body() createUserDto: CreateUserDto, @Query('role') role: Role) {
     return this.userService.create(createUserDto, role);
