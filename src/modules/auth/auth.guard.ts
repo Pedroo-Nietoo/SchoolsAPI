@@ -47,7 +47,7 @@ export class AuthGuard implements CanActivate {
 
     if (!token) {
       throw new UnauthorizedException(
-        'Token not found in cookie. Please log in',
+        'Token not found in cookie. Please log in again.',
       );
     }
 
@@ -57,7 +57,7 @@ export class AuthGuard implements CanActivate {
       });
       request.user = payload;
     } catch {
-      throw new UnauthorizedException('Invalid token');
+      throw new UnauthorizedException('Expired token');
     }
 
     return true;

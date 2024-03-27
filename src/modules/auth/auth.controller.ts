@@ -129,4 +129,39 @@ export class AuthController {
 
     return res.status(200).json('Token revoked successfully');
   }
+
+  /**
+   * Refreshes the user's token by validating if it's expired and setting it back into the cookies.
+   * @param {Request} req - The HTTP request object.
+   * @param {Response} res - The HTTP response object.
+   * @returns {object} A message indicating the successful revocation.
+   */
+  @ApiOperation({
+    summary: 'Refresh token',
+    description:
+      "Refreshes the user's token by verifying if it's expired and setting it into the cookies.",
+  })
+  @ApiOkResponse({
+    description: 'Token refreshed successfully',
+    status: 200,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Unauthorized access',
+    status: 401,
+  })
+  @Public()
+  @Get('refresh')
+  async refresh(@Request() req, @Res() res: Response) {
+    const oldToken: string = req.cookies.token;
+
+    const refreshedToken = await this.authService.refreshToken(oldToken);
+
+    res.cookie('token', refreshedToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+
+    return res.send(refreshedToken);
+  }
 }

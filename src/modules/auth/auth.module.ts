@@ -16,7 +16,7 @@ import { jwtConstants } from './constants';
       useFactory: () => ({
         secret: jwtConstants.secret,
         signOptions: {
-          expiresIn: '1d',
+          expiresIn: '1h',
         },
         cookie: {
           httpOnly: true,

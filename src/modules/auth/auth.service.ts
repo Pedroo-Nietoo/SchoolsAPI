@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
+import { UserService } from '@/modules/user/user.service';
+import { PrismaService } from '@/prisma/PrismaService';
 import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from '@/prisma/PrismaService';
-import { UserService } from '@/modules/user/user.service';
 
 /**
  * Service responsible for authentication-related operations.
@@ -62,6 +62,33 @@ export class AuthService {
       return await this.jwtService.signAsync(payload);
     } else {
       throw new UnauthorizedException('Incorrect password');
+    }
+  }
+
+  /**
+   * Refreshes the user's authentication token.
+   *
+   * @param {string} token - The user's current authentication token.
+   * @returns {Promise<string>} A promise that resolves to the new authentication token.
+   * @throws {UnauthorizedException} If the provided token is invalid.
+   *
+   */
+  async refreshToken(oldToken: string): Promise<string> {
+    try {
+      this.jwtService.verify(oldToken);
+      return oldToken;
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        const oldPayload = this.jwtService.decode(oldToken) as any;
+        delete oldPayload.exp;
+
+        const signOptions: JwtSignOptions = { expiresIn: '1h' };
+        const newToken = this.jwtService.sign(oldPayload, signOptions);
+
+        return newToken;
+      } else {
+        throw new UnauthorizedException('Invalid old token');
+      }
     }
   }
 }
