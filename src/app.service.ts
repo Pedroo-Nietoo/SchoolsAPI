@@ -57,7 +57,7 @@ export class AppService {
           this.disk.checkStorage('storage', {
             // path: `C:/Program Files/PostgreSQL/data`,
             path: `/var/lib/postgresql/data`,
-            thresholdPercent: 1.0,
+            thresholdPercent: 0.7,
           }),
         () => this.memory.checkHeap('memory_heap', 1024 * 1024 * 1024),
       ]);

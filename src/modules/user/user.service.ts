@@ -135,9 +135,10 @@ export class UserService {
           role: true,
           createdAt: true,
           updatedAt: true,
-          classes: {
+          userClasses: {
             select: {
-              id: true,
+              userId: false,
+              classId: true,
             },
           },
         },
@@ -153,9 +154,10 @@ export class UserService {
           role: true,
           createdAt: true,
           updatedAt: true,
-          classes: {
+          userClasses: {
             select: {
-              id: true,
+              userId: false,
+              classId: true,
             },
           },
         },
@@ -172,9 +174,10 @@ export class UserService {
           role: true,
           createdAt: true,
           updatedAt: true,
-          classes: {
+          userClasses: {
             select: {
-              id: true,
+              userId: false,
+              classId: true,
             },
           },
         },
@@ -202,9 +205,10 @@ export class UserService {
         role: true,
         createdAt: true,
         updatedAt: true,
-        classes: {
+        userClasses: {
           select: {
-            id: true,
+            userId: false,
+            classId: true,
           },
         },
       },

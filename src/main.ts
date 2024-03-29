@@ -37,6 +37,10 @@ async function bootstrap() {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',
     })
+    .addTag('Assign', 'All about assign', {
+      description: 'More info',
+      url: 'https://github.com/Pedroo-Nietoo',
+    })
     .addTag('Activities', 'All about activities', {
       description: 'More info',
       url: 'https://github.com/Pedroo-Nietoo',

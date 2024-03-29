@@ -9,6 +9,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ActivityModule } from './modules/activity/activity.module';
 import { Activity } from './modules/activity/entities/activity.entity';
+import { AssignModule } from './modules/assign/assign.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ClassModule } from './modules/class/class.module';
 import { Class } from './modules/class/entities/class.entity';
@@ -52,6 +53,7 @@ import { UserModule } from './modules/user/user.module';
         limit: 100,
       },
     ]),
+    AssignModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

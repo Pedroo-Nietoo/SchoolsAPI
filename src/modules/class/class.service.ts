@@ -72,7 +72,12 @@ export class ClassService {
           name: true,
           number: true,
           description: true,
-          userId: true,
+          userClasses: {
+            select: {
+              userId: true,
+              classId: false,
+            },
+          },
         },
       });
     } else if (page == 1) {
@@ -82,7 +87,12 @@ export class ClassService {
           name: true,
           number: true,
           description: true,
-          userId: true,
+          userClasses: {
+            select: {
+              userId: true,
+              classId: false,
+            },
+          },
         },
         take: 20,
       });
@@ -93,7 +103,12 @@ export class ClassService {
           name: true,
           number: true,
           description: true,
-          userId: true,
+          userClasses: {
+            select: {
+              userId: true,
+              classId: false,
+            },
+          },
         },
         take: 20,
         skip: (page - 1) * 20,
@@ -117,7 +132,12 @@ export class ClassService {
         name: true,
         number: true,
         description: true,
-        userId: true,
+        userClasses: {
+          select: {
+            userId: true,
+            classId: false,
+          },
+        },
       },
     });
 
